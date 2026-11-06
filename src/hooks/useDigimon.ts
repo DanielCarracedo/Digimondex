@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { getDigimon } from '../api'
 import type { Digimon } from '../types/digimon'
+import {getDigimon} from '../api/digimon_api'
+
 
 export function useDigimon(){
     const [digimon, setDigimon] = useState<Digimon[]>([]);
@@ -8,10 +9,10 @@ export function useDigimon(){
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        getDigimon<Digimon[]>('/Digimon')
+        getDigimon()
         .then(setDigimon)
         .catch((e: Error) => setError(e.message))
-        .finally(() => setCargando(false));
+        .finally(() => setCargar(false));
     }, []);
 
     return {digimon,cargar,error}
