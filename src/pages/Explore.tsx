@@ -1,7 +1,11 @@
 
 import { useState } from 'react'
+
 import { useDigimon } from '../hooks/useDigimon'
+
 import DigimonCard from '../components/DigimonCard'
+import Loading from '../components/Cargando'
+import ErrorScreen from '../components/ErrorScreen'
 
 function Explore() {
   const { digimon, cargar, error } = useDigimon()
@@ -18,10 +22,22 @@ function Explore() {
     )
   })
 
+  if (cargar) {
+    return <Loading />
+  }
+
+  if (error) {
+    return (
+      <ErrorScreen
+        message={error}
+        onRetry={() => window.location.reload()}
+      />
+    )
+  }
+
   return (
     <main className="min-h-screen bg-slate-950 px-6 py-10 text-white">
 
-      {/* Encabezado */}
       <section className="mx-auto max-w-7xl">
 
         <h1 className="text-4xl font-bold text-cyan-400">
@@ -47,25 +63,11 @@ function Explore() {
         {/* Resultados */}
         <div className="mt-6">
 
-          {cargar && (
-            <p className="text-center text-cyan-400">
-              Cargando Digimon...
-            </p>
-          )}
-
-          {error && (
-            <p role="alert" className="text-center text-red-400">
-              Error al cargar los Digimon: {error}
-            </p>
-          )}
-
-          {!cargar && !error && filteredDigimon.length === 0 && (
+          {filteredDigimon.length === 0 ? (
             <p className="py-10 text-center text-slate-400">
               No encontramos ningún Digimon con esa búsqueda.
             </p>
-          )}
-
-          {!cargar && !error && filteredDigimon.length > 0 && (
+          ) : (
             <>
               <p className="mb-5 text-sm text-slate-400">
                 Mostrando {filteredDigimon.length} de {digimon.length} Digimon
@@ -74,7 +76,7 @@ function Explore() {
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                 {filteredDigimon.map((item) => (
                   <DigimonCard
-                    key={`${item.name}-${item.level}`}
+                    key={item.name}
                     digimon={item}
                   />
                 ))}
@@ -89,4 +91,3 @@ function Explore() {
 }
 
 export default Explore
-
