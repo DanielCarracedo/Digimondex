@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react'
 
 interface ConfirmDialogProps {
@@ -19,16 +20,10 @@ function ConfirmDialog({
 
   useEffect(() => {
     const dialog = dialogRef.current
-
     if (!dialog) return
 
-    if (isOpen && !dialog.open) {
-      dialog.showModal()
-    }
-
-    if (!isOpen && dialog.open) {
-      dialog.close()
-    }
+    if (isOpen && !dialog.open) dialog.showModal()
+    if (!isOpen && dialog.open) dialog.close()
   }, [isOpen])
 
   return (
@@ -38,35 +33,42 @@ function ConfirmDialog({
         event.preventDefault()
         onCancel()
       }}
-      className="m-auto w-[90%] max-w-md rounded-xl bg-slate-900 p-6 text-white backdrop:bg-black/70"
+      className="m-auto w-[90%] max-w-md rounded-3xl border border-[#E5E1D8] bg-[#FFFEFA] p-0 text-[#405D78] shadow-2xl backdrop:bg-[#35485C]/40"
     >
-      <h2 className="text-xl font-bold">
-        {title}
-      </h2>
+      <div className="p-7">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#F5E4E0] text-xl text-[#A66D64]">
+          !
+        </div>
 
-      <p className="mt-4 text-slate-300">
-        {message}
-      </p>
+        <h2 className="mt-5 text-2xl font-black">
+          {title}
+        </h2>
 
-      <div className="mt-6 flex justify-end gap-3">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="rounded-lg border border-slate-600 px-4 py-2"
-        >
-          Cancelar
-        </button>
+        <p className="mt-3 leading-relaxed text-[#87949C]">
+          {message}
+        </p>
 
-        <button
-          type="button"
-          onClick={onConfirm}
-          className="rounded-lg bg-red-500 px-4 py-2 font-bold text-white"
-        >
-          Sí, eliminar
-        </button>
+        <div className="mt-7 flex flex-wrap justify-end gap-3">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="rounded-xl bg-[#EEF0EF] px-5 py-3 font-semibold text-[#718294] hover:bg-[#E3E8E6]"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="button"
+            onClick={onConfirm}
+            className="rounded-xl bg-[#E9C9C2] px-5 py-3 font-bold text-[#895A53] hover:bg-[#E0B5AA]"
+          >
+            Sí, eliminar
+          </button>
+        </div>
       </div>
     </dialog>
   )
 }
 
 export default ConfirmDialog
+

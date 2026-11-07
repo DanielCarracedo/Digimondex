@@ -1,5 +1,9 @@
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { FavoritesProvider } from './context/FavoritesContext'
+
+import Layout from './components/Layout'
+
 import Home from './pages/Home'
 import Explore from './pages/Explore'
 import DigimonDetails from './pages/digimonDetails'
@@ -12,12 +16,14 @@ function App() {
     <FavoritesProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/digimon/:name" element={<DigimonDetails />} />
-          <Route path="/favorites" element={<Favorites />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="*" element={<NotFound />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/digimon/:name" element={<DigimonDetails />} />
+            <Route path="/favorites" element={<Favorites />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </FavoritesProvider>
@@ -25,3 +31,4 @@ function App() {
 }
 
 export default App
+
